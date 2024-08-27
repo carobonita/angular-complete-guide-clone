@@ -28,4 +28,5 @@ export class AppComponent {
     onSelectedUser(id: string) {
         this.selectedUserId = id;
     }
+
 }
