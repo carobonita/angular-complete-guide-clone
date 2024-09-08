@@ -1,6 +1,9 @@
 import { Component, Input, Output, EventEmitter} from '@angular/core';
 import { TaskComponent } from "./task/task.component";
 import { NewTaskComponent } from './new-task/new-task.component';
+import { type NewTaskData } from './task/task.model'
+import { CardComponent } from '../shared/card/card.component';
+import { TasksService } from './tasks.service';
 
 @Component({
   selector: 'app-tasks',
@@ -11,40 +14,20 @@ import { NewTaskComponent } from './new-task/new-task.component';
 })
 export class TasksComponent {
   @Input({required: true}) userId!: string;
-  @Input({required: true}) name?: string;
+  @Input({required: true}) name!: string;
 
   isAddingTask = false;
+  //private makes the property only accessible within this class
+  //public makes the property accessible outside of this class
+  constructor(private tasksService: TasksService) {
 
-  tasks = [
-    {
-      id: 't1',
-      userId: 'u1',
-      title: 'Master Angular',
-      summary: 'Learn Angular all the basic and advance features of Angular & how to apply them',
-      dueDate: '2025-12-31'
-    },
-    {
-      id: 't2',
-      userId: 'u3',
-      title: 'Build first prototype',
-      summary: 'build a first prototype of the online shop website',
-      dueDate: '2024-05-31'
-    },
-    {
-      id: 't3',
-      userId: 'u3',
-      title: 'Prepare issues template',
-      summary: 'Prepare and describe an issue template which wil help with project management',
-      dueDate: '2026-06-15'
-    }
-  ];
-
-  get selectedUserTasks() {
-    return this.tasks.filter(task => task.userId === this.userId);
   }
-  
-  onCompleteTask(id: string) {
-    this.tasks = this.tasks.filter((task) => task.id !== id);
+  get selectedUserTasks() {
+    return this.tasksService.getUsertasks(this.userId);
+  }
+
+  onCompleteTask(id: string){
+    
   }
 
   onStartAddTask() {
@@ -54,4 +37,8 @@ export class TasksComponent {
   onCancelAddTask() {
     this.isAddingTask = false;
   }
+
+  onAddTask(taskData: NewTaskData) {
+    this.isAddingTask = false;
+  };
 }
