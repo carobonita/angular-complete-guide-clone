@@ -8,19 +8,20 @@ import { UserComponent } from './user/user.component';
 import { TasksComponent } from './tasks/tasks.component';
 import { TaskComponent } from './tasks/task/task.component';
 import { NewTaskComponent } from './tasks/new-task/new-task.component';
-import { CardComponent } from './shared/card/card.component';
+import { SharedModule } from './shared/shared.module';
+
+
 
 @NgModule({
   declarations: [
     AppComponent, 
     HeaderComponent, 
     UserComponent, 
-    CardComponent,
     TasksComponent, 
     TaskComponent, 
     NewTaskComponent ], //declare and register components, directives, and pipes
-  imports: [BrowserModule, FormsModule],
-  bootstrap: [AppComponent] //specify the root component
+  bootstrap: [AppComponent], //specify the root component
+  imports: [BrowserModule, FormsModule, SharedModule],
 
 })
 export class AppModule {}
